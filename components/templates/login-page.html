@@ -1,0 +1,17 @@
+<template tag-name="login-page">
+
+	<!-- <input placeholder="Enter the userName " id="username"/> <br>
+	<input placeholder="Enter the Password " id="password"/>
+
+	<button onclick="{{action('loginUser')}}">Login</button> -->
+
+	<div>
+		<h2>Login</h2>
+		<input type="text" lyte-bind="username" placeholder="Username">
+		<input type="password" lyte-bind="password" placeholder="Password">
+		<button lyte-click="login">Login</button>
+		<!-- <button onclick="{{action('login')}}">Login</button> -->
+		<p lyte-if="errorMessage">{{errorMessage}}</p>
+	</div>
+
+</template>
