@@ -7,11 +7,14 @@
 
 	<div>
 		<h2>Login</h2>
-		<input type="text" lyte-bind="username" placeholder="Username">
-		<input type="password" lyte-bind="password" placeholder="Password">
-		<button lyte-click="login">Login</button>
-		<!-- <button onclick="{{action('login')}}">Login</button> -->
-		<p lyte-if="errorMessage">{{errorMessage}}</p>
+		<input type="text" value="{{lbind(username)}}" placeholder="Username">
+		<br><br>
+
+		<input type="password"  value="{{lbind(password)}}" placeholder="Password">
+		<br><br>
+		<button onclick="{{action('login')}}">Login</button>
+
+		<p lyte-if="errorMessage">{{errorMessage}}</p> 
 	</div>
 
 </template>

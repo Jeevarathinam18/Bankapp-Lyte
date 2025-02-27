@@ -1,24 +1,26 @@
 Lyte.Component.register("account-page", {
 	data : function(){
 		return {
-			
-			// balance: 1000,
-			accountNumber:'',
-			depositAmount: 0,
-			withdrawAmount: 0,
-			transferAmount: 0,
-			recipient: ''
+	
+			accountNumber: Lyte.attr('string'),
+			depositAmount: Lyte.attr('number'),
+			withdrawAmount: Lyte.attr('number'),
+			transferAmount: Lyte.attr('number'),
+			recipient: Lyte.attr('string')
 			
 		}		
 	},
-	action : {
+	actions : {
 
 		deposit: function () {
-			let amount = parseFloat(document.getElementById('depositAmount').value);
-			let accountNumber = document.getElementById('accountNumber').value;
-			let token = sessionStorage.getItem("jwtToken");
+			
+			let amount = this.getData("depositAmount");
+			let accountNumber = this.getData("accountNumber");
 
+
+			let token = sessionStorage.getItem("jwtToken");
 			console.log(amount, accountNumber);
+
 			if(!token){
 				alert("You're not authroized");
 			}
@@ -35,20 +37,19 @@ Lyte.Component.register("account-page", {
 			.then(data => {
 				console.log(data);
 				alert(data);
-
-				document.getElementById('depositAmount').value = '';
-				document.getElementById('accountNumber').value = '';
+				this.setData("depositAmount", '');
+				this.setData("accountNumber", '');
 
 			})
 			.catch(error => alert('Error: ' + error.message));
 		},
 		
 		withdraw: function () {
-			let amount = parseFloat(document.getElementById('withdrawAmount').value);
-			let accountNumber = document.getElementById('withdrawAccNumber').value;
+			let amount = parseFloat(this.getData('withdrawAmount'));
+			let accountNumber = this.getData("withdrawAccNumber");
+
 			let token = sessionStorage.getItem("jwtToken");
 			console.log(accountNumber);
-			// let amount = parseFloat(this.getData('withdrawAmount'));
 			
 			fetch('http://localhost:8080/accounts/withdraw', {
 				method: 'POST',
@@ -61,22 +62,17 @@ Lyte.Component.register("account-page", {
 			.then(data => {
 
 				alert(data);
-				// if (data.success) {
-				// 	this.setData('balance', data.newBalance);
-				// 	alert('Withdrawal successful');
-				// } else {
-				// 	alert('Withdrawal failed: ' + data.message);
-				// }
-				document.getElementById('withdrawAmount').value = '';
-				document.getElementById('withdrawAccNumber').value = '';
+				this.setData('withdrawAmount', '');
+				this.setData('withdrawAccNumber', '');
 			})
 			.catch(error => alert('Error: ' + error.message));
 		},
 		
 		transfer: function () {
-			let fromAccounNumber = document.getElementById('transferAccNumber').value;
-			let amount = parseFloat(document.getElementById('transferAmount').value);
-			let toAccountNumber = document.getElementById('recipient').value;
+			let fromAccounNumber = this.getData('transferAccNumber');
+			let amount = parseFloat(this.getData('transferAmount'));
+			let toAccountNumber = this.getData('recipient');
+
 			let token = sessionStorage.getItem("jwtToken");	
 			fetch('http://localhost:8080/accounts/transfer', {
 				method: 'POST',
@@ -89,9 +85,9 @@ Lyte.Component.register("account-page", {
 			.then(response => response.text())
 			.then(data => {
 				alert(data);
-				document.getElementById('transferAccNumber').value = '';
-				document.getElementById('transferAmount').value = '';
-				document.getElementById('recipient').value = '';
+				this.setData('transferAccNumber','');
+				this.setData('transferAmount','');
+				this.setData('recipient','');
 
 			})
 			.catch(error => alert('Error: ' + error.message));
@@ -100,16 +96,7 @@ Lyte.Component.register("account-page", {
 		logout: function(){
 			sessionStorage.removeItem("jwtToken");
 			sessionStorage.clear();
-			window.location.replace('/')
-
-			// setTimeout(() => {
-			// 	window.history.pushState(null, "", window.location.href);
-			// }, 0);
-		
-			// window.onpopstate = function () {
-			// 	window.history.pushState(null, "", window.location.href);
-			// };
-
+			Lyte.Router.replaceWith('index');
 		}
 		
 	},

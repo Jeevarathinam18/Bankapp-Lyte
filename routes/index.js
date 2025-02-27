@@ -17,7 +17,7 @@ Lyte.Router.registerRoute('index',{
 				{module : 'CLI',url : 'http://lyte/2.0/doc/cli/introduction'}
 			]
 		}
-				
+	
 	},
 // afterModel  : function (model, paramsObject ){ 
 //         /* Manipulating data before returning data to component. */

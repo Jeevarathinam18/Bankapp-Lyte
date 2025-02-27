@@ -5,9 +5,19 @@ Lyte.Router.registerRoute("account",{
 // getDependencies  : function (paramsObject ){ 
 //         /* Files returned as dependencies will be downloaded at once and will be available before 'beforeModel' hook. */
 // },
-// beforeModel  : function (paramsObject ){ 
-//         /* Pre processing stage where you can decide whether to abort/redirect the current transition(e.g Permission check). */
-// },
+beforeModel  : function (paramsObject ){ 
+        /* Pre processing stage where you can decide whether to abort/redirect the current transition(e.g Permission check). */
+        console.log('before Route Change');
+
+	let token = sessionStorage.getItem("jwtToken");
+	// console.log(this.transition.info.route );
+	if(!token){
+		// window.location.replace('/')
+		this.replaceWith("index");
+		return false;
+	}
+	return true;
+},
 // model  : function (paramsObject ){ 
 //         /* Initiate data request that are necessary for the current page. */
 // },

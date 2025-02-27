@@ -7,11 +7,11 @@ Lyte.Component.register("welcome-comp",{
 	actions : {
 		// Functions for event handling
 		navigateToLogin() {
-			Lyte.Router.transitionTo('login');
+			Lyte.Router.replaceWith('login');
 		},
 		
 		registerAdmin(){
-			Lyte.Router.transitionTo('adminRegister')
+			Lyte.Router.replaceWith('adminRegister')
 		}
 	},
 	methods : {

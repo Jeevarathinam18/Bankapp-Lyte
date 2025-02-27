@@ -9,11 +9,18 @@
     "license": "ISC",
    
     "dependencies" : {
-      "@zoho/lyte" : "3.1.0"
+      "@zoho/lyte" : "3.1.0",
+      "@zoho/lyte-dom": "2.0.22",
+      "@zoho/lyte-ui-component": "3.97.0"
     },
     "devDependencies" : {
-     
-    }
+      "@zoho/lyte-dom": "2.0.22",
+      "@zoho/lyte-cli": "3.4.0"
+    },
+
+    "addons": [
+      "@zoho/lyte-ui-component"
+    ]
   
 }
   

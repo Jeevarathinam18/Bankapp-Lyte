@@ -1,67 +1,49 @@
-Lyte.Component.register("login-page", {
-	data : function(){
-		return {
-            username: Lyte.attr("string"),
-            password: Lyte.attr("string")
-        };	
-	},
+	Lyte.Component.register("login-page", {
+		data : function(){
+			return {
+				username: Lyte.attr("string"),
+				password: Lyte.attr("string")
+			};	
+		},
 
-	actions : {
-		// Functions for event handling
-		// loginUser() {
-		// 	// Lyte.Router.transitionTo('logn');
-		// 	let username = document.getElementById("username").value;
-		// 	let password = document.getElementById("password").value;
+		actions : {
+		
+			login() {
+				
+				let username = this.getData("username");
+				let password = this.getData("password");
 
-		// 	this.setData("username", username);
-		// 	this.setData("password", password);
+				if(!username && !password){
+					alert("Please Enter Username and Password");
+					return;
 
-		// 	console.log(username, password);
-		// 	// let record = store.createRecord( "user" ,{username : username , password:password });
-		// 	// record.$.save();
+				}else if(!username){
+					alert("Please Enter Username");
+					return;
 
-		// 	this.executeMethod("login");
-		// }
-
-		//---
-
-		login() {
-			alert("FIRED")
-            let self = this;
-			console.log("SELF ", self);
-            Lyte.Service.request({
-                method: 'POST',
-                url: 'http://localhost:8080/auth/login',
-                headers: {'Content-Type': 'application/json'},
-                body: {
-                    username: self.getData('username'),
-                    password: self.getData('password')
-                }
-            }).then(function(response) {
-                if (response.code === 200) {
-                    localStorage.setItem('token', response.data.token);
-                    window.location.href = '/accounts';
-                } else {
-                    self.setData('errorMessage', 'Invalid credentials');
-                }
-            }).catch(function(error) {
-                self.setData('errorMessage', 'Login failed');
-            });
-        }
-	},
-	methods : {
-		// Functions which can be used as callback in the component.
-		login:function(){
-
-			let payload = {
-				username : this.data.username,
-				password : this.data.password
+				}else if(!password){
+					alert("Please enter Password");
+					return;
+				}
+				
+				console.log("here");
+				this.executeMethod("login");
 			}
-			console.log("PAY", payload);
 
+		},
+
+		methods : {
+
+			login : function(){
+			let payload = {
+				"username": this.getData('username'),
+				"password": this.getData('password')
+
+			}
+			console.log("PAYLOAD ", payload);
 			fetch("http://localhost:8080/auth/login", { 	
 				method: "POST",
-				//headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(payload)
 			})
 			.then(response => {
@@ -72,20 +54,36 @@ Lyte.Component.register("login-page", {
 			})
 			.then(data => {
 				console.log("Response:", data);
-				
-				if (data.token) {
-					sessionStorage.setItem("jwtToken", data.token);
-				}
-			
-				Lyte.Router.transitionTo('account');
-			
+
+			if (data.token) {
+				sessionStorage.setItem("jwtToken", data.token);
+			}
+
+			Lyte.Router.replaceWith('account');
+
 			})
 			.catch(error => {
 				console.error("Login Error:", error);
 				alert("Invalid credentials. Please try again.");
 			});
+
+			// $L.ajax({
 			
+			// 	method: "POST",
+			// 	url: "http://localhost:8080/auth/login",
+			// 	headers: { "Content-Type": "application/json" },
+			// 	dataType: "json",  // Important! Ensures data is sent as JSON
+			// 	data: JSON.stringify(payload),
+			
+			// 	success: function(response) {
+			// 		console.log("Success:", response);
+			// 	},
+			// 	error: function(response) {
+			// 		console.log("Error:", response); // Fixed error callback
+			// 	}
+			// });
 
 		}
-	}
-});
+
+		}
+	});
