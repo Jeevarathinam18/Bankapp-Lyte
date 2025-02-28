@@ -1,0 +1,12 @@
+<template tag-name="admin-register">
+
+        <h2>Admin Registration</h2>
+        <input type="text" placeholder="Username" lbind:value="username"/>
+        <input type="email" placeholder="Email" lbind:value="email"/>
+        <input type="password" placeholder="Password" lbind:value="password"/>
+        <button onclick="{{action('registerAdmin')}}">Register Admin</button>
+        <button onclick="registerAdmin">Register Admin</button>
+        <!-- <p lif="message">{{message}}</p> -->
+    
+
+</template>
